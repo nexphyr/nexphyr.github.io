@@ -1,9 +1,6 @@
-import { int64 } from "./int64.js";
 
-import {
-    releaseFakeCell, fakeCellReleased,
-    carrierHeaderCopy, carrierHomeVector
-} from "./core.js?v=10";
+
+
 
 let carrier = null;
 
@@ -240,7 +237,7 @@ let workerMirror = null;
 let pairVectorOffset = -1;
 const retained = [];
 
-export const pairStatus = {
+const pairStatus = {
 
     state: "not-attempted",
     promoted: false,
@@ -405,7 +402,7 @@ function proveMagic(note, who, slot, at, expected, context) {
     return record;
 }
 
-export function promoteToRealPair(onEvent) {
+function promoteToRealPair(onEvent) {
     const note = (tag, detail) => {
         pairStatus.stage = tag;
         if (typeof onEvent === "function") {
@@ -730,7 +727,7 @@ export function promoteToRealPair(onEvent) {
     }
 }
 
-export function installWindowP(c, options) {
+function installWindowP(c, options) {
     if (!c || typeof c.aim !== "function")
         throw new TypeError("mem: not a carrier");
     carrier = c;
@@ -764,9 +761,4 @@ export function installWindowP(c, options) {
     return prim;
 }
 
-export {
-    read1, read2, read4, read8,
-    write1, write2, write4, write8,
-    leakval,
-    readInto, toI64, addrNumber, int64
-};
+

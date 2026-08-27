@@ -1,7 +1,7 @@
-import { establishPrimitive } from "./core.js";
-import { installWindowP } from "./mem.js";
-import { int64 } from "./int64.js";
-import { offsetsFor } from "./ps4_offsets.js";
+
+
+
+
 
 const outEl = document.getElementById("out");
 const stateEl = document.getElementById("state");
