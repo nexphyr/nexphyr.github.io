@@ -70,5 +70,5 @@ Jika Anda ingin meng-host NEXPHYRIX di server Anda sendiri (Apache / Nginx) atau
 ---
 
 <div align="center">
-  <p>© 2026 NEXPHYRIX | DAENG 17PlayBox</p>
+  <p>© 2026 NEXPHYRIX</p>
 </div>
