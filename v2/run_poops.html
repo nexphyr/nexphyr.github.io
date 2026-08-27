@@ -18,15 +18,15 @@
     }
 
     :root {
-      --r: rgba(255, 30, 60, 1);
-      --r1: rgba(255, 30, 60, .7);
-      --r2: rgba(255, 30, 60, .15);
-      --r3: rgba(255, 30, 60, .05);
-      --rg: rgba(255, 80, 80, .4);
-      --rd: #ff1e3c;
-      --dark: #080608;
-      --text: rgba(255, 220, 220, .92);
-      --dim: rgba(255, 80, 80, .45);
+      --b: rgba(0, 180, 255, 1);
+      --b1: rgba(0, 180, 255, .7);
+      --b2: rgba(0, 180, 255, .15);
+      --b3: rgba(0, 180, 255, .05);
+      --bg: rgba(0, 200, 255, .4);
+      --bd: #00b4ff;
+      --dark: #020a14;
+      --text: rgba(180, 220, 255, .92);
+      --dim: rgba(0, 140, 200, .55);
       --mono: 'Share Tech Mono', monospace;
       --orb: 'Orbitron', sans-serif;
     }
@@ -57,8 +57,8 @@
       pointer-events: none;
       z-index: 0;
       background:
-        repeating-linear-gradient(60deg, rgba(255, 30, 60, .04) 0, rgba(255, 30, 60, .04) 1px, transparent 1px, transparent 40px),
-        repeating-linear-gradient(-60deg, rgba(255, 30, 60, .03) 0, rgba(255, 30, 60, .03) 1px, transparent 1px, transparent 40px);
+        repeating-linear-gradient(60deg, rgba(0, 180, 255, .04) 0, rgba(0, 180, 255, .04) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(-60deg, rgba(0, 180, 255, .03) 0, rgba(0, 180, 255, .03) 1px, transparent 1px, transparent 40px);
     }
 
     .scanlines {
@@ -66,7 +66,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .13) 0, rgba(0, 0, 0, .13) 1px, transparent 1px, transparent 3px)
+      background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .12) 0, rgba(0, 0, 0, .12) 1px, transparent 1px, transparent 3px)
     }
 
     .vignette {
@@ -74,7 +74,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 1;
-      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(4, 0, 4, .7) 100%)
+      background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0, 4, 12, .7) 100%)
     }
 
     .glow-bg {
@@ -82,7 +82,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      background: radial-gradient(ellipse 50% 45% at 50% 52%, rgba(255, 20, 50, .07) 0%, transparent 65%)
+      background: radial-gradient(ellipse 50% 45% at 50% 52%, rgba(0, 180, 255, .07) 0%, transparent 65%)
     }
 
     .strip {
@@ -92,7 +92,7 @@
       width: 130px;
       overflow: hidden;
       opacity: .055;
-      color: var(--rd);
+      color: var(--bd);
       font: 11px/1.1 var(--mono);
       word-break: break-all;
       pointer-events: none;
@@ -118,11 +118,12 @@
       padding: 22px 26px
     }
 
+    /* top bar */
     #topbar {
       display: flex;
       align-items: center;
       gap: 0;
-      border-bottom: 1px solid rgba(255, 30, 60, .2);
+      border-bottom: 1px solid rgba(0, 180, 255, .2);
       padding-bottom: 16px;
       margin-bottom: 0
     }
@@ -141,17 +142,20 @@
       align-items: center;
       justify-content: center;
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: rgba(255, 30, 60, .12);
-      border: 1px solid rgba(255, 30, 60, .5);
-      box-shadow: 0 0 20px rgba(255, 30, 60, .3), inset 0 0 12px rgba(255, 30, 60, .08);
+      background: rgba(0, 180, 255, .12);
+      border: 1px solid rgba(0, 180, 255, .5);
+      box-shadow: 0 0 20px rgba(0, 180, 255, .3), inset 0 0 12px rgba(0, 180, 255, .08);
     }
+
+    .brand-block {}
 
     .brand-title {
       display: block;
       font: 900 22px/1 var(--orb);
       letter-spacing: .12em;
       color: #fff;
-      text-shadow: 0 0 15px rgba(255, 30, 60, .8), 0 0 30px rgba(255, 30, 60, .3);
+      text-shadow: 0 0 15px rgba(0, 180, 255, .8), 0 0 30px rgba(0, 180, 255, .3);
+      position: relative;
     }
 
     .brand-title .glitch-wrap {
@@ -169,12 +173,12 @@
     }
 
     .brand-title .glitch-wrap::before {
-      color: #ff6b6b;
+      color: #00fff7;
       animation: glitch 4s infinite
     }
 
     .brand-title .glitch-wrap::after {
-      color: #ff0033;
+      color: #7b2fff;
       animation: glitch 4s .2s infinite reverse
     }
 
@@ -187,7 +191,7 @@
     }
 
     .brand-sub span {
-      color: rgba(255, 80, 80, .65)
+      color: rgba(0, 160, 220, .65)
     }
 
     .topbar-right {
@@ -202,11 +206,11 @@
       align-items: center;
       gap: 6px;
       padding: 5px 11px;
-      border: 1px solid rgba(255, 30, 60, .3);
-      background: rgba(255, 30, 60, .06);
+      border: 1px solid rgba(0, 180, 255, .3);
+      background: rgba(0, 180, 255, .06);
       font: 10px var(--mono);
       letter-spacing: .1em;
-      color: rgba(255, 120, 120, .7);
+      color: rgba(0, 160, 220, .7);
     }
 
     .status-pill::before {
@@ -214,12 +218,13 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--rd);
-      box-shadow: 0 0 6px var(--rd);
+      background: var(--bd);
+      box-shadow: 0 0 6px var(--bd);
       animation: pulse 1.4s ease-in-out infinite;
       flex-shrink: 0;
     }
 
+    /* center */
     #center {
       flex: 1;
       display: flex;
@@ -239,12 +244,12 @@
     .panel-frame {
       position: relative;
       padding: 2px;
-      background: linear-gradient(135deg, rgba(255, 30, 60, .5), rgba(255, 0, 30, .1) 40%, rgba(255, 30, 60, .4));
-      box-shadow: 0 0 50px rgba(255, 30, 60, .12), 0 0 100px rgba(255, 30, 60, .05);
+      background: linear-gradient(135deg, rgba(0, 180, 255, .5), rgba(0, 100, 200, .1) 40%, rgba(0, 180, 255, .4));
+      box-shadow: 0 0 50px rgba(0, 180, 255, .12), 0 0 100px rgba(0, 180, 255, .05);
     }
 
     .panel-inner {
-      background: linear-gradient(160deg, rgba(20, 4, 8, .97) 0%, rgba(10, 2, 6, .99) 100%);
+      background: linear-gradient(160deg, rgba(4, 10, 24, .97) 0%, rgba(2, 8, 18, .99) 100%);
       padding: 28px 30px;
       position: relative;
       overflow: hidden;
@@ -255,7 +260,7 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(to right, transparent 0%, rgba(255, 30, 60, .6) 30%, rgba(255, 80, 80, .9) 50%, rgba(255, 30, 60, .6) 70%, transparent 100%);
+      background: linear-gradient(to right, transparent 0%, rgba(0, 180, 255, .6) 30%, rgba(0, 220, 255, .9) 50%, rgba(0, 180, 255, .6) 70%, transparent 100%);
       filter: blur(.5px);
       animation: scan 3s linear infinite;
       pointer-events: none;
@@ -272,24 +277,24 @@
     .p-eyebrow {
       font: 10px var(--mono);
       letter-spacing: .2em;
-      color: rgba(255, 30, 60, .5)
+      color: rgba(0, 180, 255, .5)
     }
 
     .p-eyebrow::before {
       content: "// ";
-      color: rgba(255, 80, 80, .4)
+      color: rgba(0, 160, 220, .4)
     }
 
     .p-id {
       font: 9px var(--mono);
-      color: rgba(255, 30, 60, .3);
+      color: rgba(0, 180, 255, .3);
       letter-spacing: .08em
     }
 
     .divider {
       width: 100%;
       height: 1px;
-      background: linear-gradient(to right, transparent, rgba(255, 30, 60, .4), transparent);
+      background: linear-gradient(to right, transparent, rgba(0, 180, 255, .4), transparent);
       margin: 14px 0
     }
 
@@ -298,13 +303,13 @@
       letter-spacing: .05em;
       text-transform: uppercase;
       color: #fff;
-      text-shadow: 0 0 20px rgba(255, 30, 60, .5);
+      text-shadow: 0 0 20px rgba(0, 180, 255, .5);
       margin-bottom: 12px;
     }
 
     #state.ok {
-      color: #ff6666;
-      text-shadow: 0 0 18px rgba(255, 60, 60, .6)
+      color: #66ccff;
+      text-shadow: 0 0 18px rgba(0, 180, 255, .6)
     }
 
     #state.bad {
@@ -313,28 +318,29 @@
     }
 
     #state.warn {
-      color: #ff8844;
-      text-shadow: 0 0 18px rgba(255, 120, 40, .5)
+      color: #00e5ff;
+      text-shadow: 0 0 18px rgba(0, 229, 255, .5)
     }
 
+    /* log output */
     #out {
       max-height: 200px;
       overflow-y: auto;
       padding: 11px 14px;
-      border-left: 2px solid rgba(255, 30, 60, .35);
-      background: rgba(255, 30, 60, .04);
+      border-left: 2px solid rgba(0, 180, 255, .35);
+      background: rgba(0, 180, 255, .04);
       font: 12px/1.8 var(--mono);
-      color: rgba(255, 190, 190, .6);
+      color: rgba(140, 200, 255, .6);
       white-space: pre-wrap;
     }
 
     #out:empty::after {
       content: "Menyiapkan log eksekusi…";
-      color: rgba(255, 80, 80, .3)
+      color: rgba(0, 140, 200, .3)
     }
 
     .ok {
-      color: #ff8888
+      color: #66ccff
     }
 
     .bad {
@@ -342,41 +348,41 @@
     }
 
     .warn {
-      color: #ff9944
+      color: #00e5ff
     }
 
     #cache {
       margin-top: 14px;
       padding-top: 12px;
-      border-top: 1px solid rgba(255, 30, 60, .1);
+      border-top: 1px solid rgba(0, 180, 255, .1);
       font: 12px var(--mono);
-      color: rgba(255, 30, 60, .35);
+      color: rgba(0, 180, 255, .35);
       min-height: 16px;
       letter-spacing: .05em;
     }
 
     #cache::before {
       content: "◈ STATUS  ";
-      color: rgba(255, 60, 60, .5)
+      color: rgba(0, 160, 255, .5)
     }
 
     #cache.cacheok {
-      color: rgba(255, 100, 100, .65)
+      color: rgba(0, 200, 255, .65)
     }
 
     .panel-stats {
       display: flex;
       gap: 0;
       margin-top: 20px;
-      border: 1px solid rgba(255, 30, 60, .15);
-      background: rgba(255, 30, 60, .03);
+      border: 1px solid rgba(0, 180, 255, .15);
+      background: rgba(0, 180, 255, .03);
     }
 
     .stat-item {
       flex: 1;
       padding: 8px 12px;
       text-align: center;
-      border-right: 1px solid rgba(255, 30, 60, .12);
+      border-right: 1px solid rgba(0, 180, 255, .12);
     }
 
     .stat-item:last-child {
@@ -386,18 +392,19 @@
     .stat-val {
       display: block;
       font: 600 13px var(--mono);
-      color: rgba(255, 80, 80, .75);
+      color: rgba(0, 180, 255, .75);
       letter-spacing: .06em
     }
 
     .stat-lbl {
       display: block;
       font: 9px var(--mono);
-      color: rgba(255, 30, 60, .3);
+      color: rgba(0, 180, 255, .3);
       letter-spacing: .1em;
       margin-top: 2px
     }
 
+    /* footer */
     #footer {
       display: flex;
       align-items: center;
@@ -405,14 +412,14 @@
       gap: 20px;
       flex-wrap: wrap;
       padding-top: 14px;
-      border-top: 1px solid rgba(255, 30, 60, .12);
+      border-top: 1px solid rgba(0, 180, 255, .12);
       font: 9px var(--mono);
-      color: rgba(255, 30, 60, .25);
+      color: rgba(0, 180, 255, .25);
       letter-spacing: .08em;
     }
 
     #footer b {
-      color: rgba(255, 60, 60, .4);
+      color: rgba(0, 160, 220, .4);
       font-weight: 400
     }
 
@@ -461,12 +468,12 @@
       0%,
       100% {
         opacity: 1;
-        box-shadow: 0 0 6px var(--rd)
+        box-shadow: 0 0 6px var(--bd)
       }
 
       50% {
         opacity: .3;
-        box-shadow: 0 0 2px var(--rd)
+        box-shadow: 0 0 2px var(--bd)
       }
     }
 
@@ -506,10 +513,10 @@
         <div class="logo-hex">
           <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true">
-            <circle cx="13" cy="13" r="11" stroke="rgba(255,80,80,0.8)" stroke-width="1.5" fill="none" />
-            <path d="M8 17V9.5L12.5 9c1.8 0 3.2.8 3.2 2.5s-1.4 2.6-3.2 2.6H11V17H8z" fill="rgba(255,80,80,0.85)" />
-            <path d="M15.5 14l3 3" stroke="rgba(255,80,80,0.6)" stroke-width="1.5" stroke-linecap="round" />
-            <circle cx="13" cy="13" r="1.5" fill="rgba(255,30,60,0.5)" />
+            <circle cx="13" cy="13" r="11" stroke="rgba(0,180,255,0.8)" stroke-width="1.5" fill="none" />
+            <path d="M8 17V9.5L12.5 9c1.8 0 3.2.8 3.2 2.5s-1.4 2.6-3.2 2.6H11V17H8z" fill="rgba(0,180,255,0.85)" />
+            <path d="M15.5 14l3 3" stroke="rgba(0,180,255,0.6)" stroke-width="1.5" stroke-linecap="round" />
+            <circle cx="13" cy="13" r="1.5" fill="rgba(0,180,255,0.5)" />
           </svg>
         </div>
         <div class="brand-block">
