@@ -624,12 +624,11 @@
     })();
 
     // ─── Load exploit chain ──────────────────────────────────────────
-    // PS4 WebKit tidak support <script type="module">.
-    // Gunakan script tag dinamis sebagai gantinya.
+    // Karena chain_lapse.js menggunakan `import`, script HARUS diload sebagai module.
     function loadChain() {
       var s = document.createElement('script');
+      s.type = 'module';
       s.src = './chain_lapse.js';
-      s.async = false;
       document.body.appendChild(s);
     }
   </script>
