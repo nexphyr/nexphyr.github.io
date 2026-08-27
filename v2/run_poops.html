@@ -567,20 +567,11 @@
   </main>
 
   <script>
-    // Load script secara berurutan sebagai classic script (non-module) 
-    // untuk menghindari bug CORS pada WebKit saat membaca cache offline.
     function loadChain() {
-      var scripts = ['./int64.js', './ps4_offsets.js', './core.js', './mem.js', './chain_poops_2.js'];
-      var i = 0;
-      function loadNext() {
-        if (i >= scripts.length) return;
-        var s = document.createElement('script');
-        s.src = scripts[i];
-        s.onload = loadNext;
-        document.body.appendChild(s);
-        i++;
-      }
-      loadNext();
+      var s = document.createElement('script');
+      s.type = 'module';
+      s.textContent = 'import "./chain_poops_2.js";';
+      document.body.appendChild(s);
     }
     // Karena run_poops tidak pakai loader AppCache monitor, langsung load saja
     loadChain();
