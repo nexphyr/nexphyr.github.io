@@ -1,7 +1,6 @@
 CACHE MANIFEST
-# build NEXPHYRIX-ROOT-20260827-05
+# build NEXPHYRIX-ROOT-20260827-06
 
-CACHE:
 index.html
 v1/index.html
 v1/includes/style.css
@@ -27,6 +26,3 @@ v2/patches/1300.bin
 
 NETWORK:
 *
-
-FALLBACK:
-/ index.html

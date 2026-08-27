@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="id" manifest="cache.appcache">
-  
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -289,28 +289,38 @@
       gap: 8px;
       transition: color 0.4s, border-color 0.4s;
     }
+
     #cache-status.ok {
       color: #7fd0a0;
       border-color: #7fd0a0;
-      text-shadow: 0 0 6px rgba(127,208,160,0.4);
+      text-shadow: 0 0 6px rgba(127, 208, 160, 0.4);
     }
+
     #cache-status.warn {
       color: var(--blue);
       border-color: var(--blue);
       text-shadow: 0 0 6px var(--blue-glow);
     }
+
     #cache-status.err {
       color: #d08a7f;
       border-color: #d08a7f;
     }
+
     #cache-status .dot {
       display: inline-block;
-      width: 6px; height: 6px;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
       background: currentColor;
       animation: blink 1s step-start infinite;
     }
-    @keyframes blink { 50% { opacity: 0; } }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
 
     .choice-grid {
       display: flex;
@@ -561,7 +571,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .btn-cache.done .cache-icon {
@@ -658,17 +670,17 @@
     </button>
   </main>
 
-  <footer>© <span id="footer-year"></span> NEXPHYRIX — 087-777-747-477</footer>
+  <footer>© <span id="footer-year"></span> NEXPHYRIX</footer>
 
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
     (function () {
-      var statusEl  = document.getElementById('cache-status');
-      var btnCache  = document.getElementById('btn-cache');
-      var descEl    = document.getElementById('cache-desc');
-      var barEl     = document.getElementById('cache-bar');
-      var iconWrap  = btnCache;
+      var statusEl = document.getElementById('cache-status');
+      var btnCache = document.getElementById('btn-cache');
+      var descEl = document.getElementById('cache-desc');
+      var barEl = document.getElementById('cache-bar');
+      var iconWrap = btnCache;
 
       var ac = window.applicationCache;
       var isOnline = navigator.onLine;
@@ -722,7 +734,7 @@
         }
       }
 
-      window.addEventListener('online',  function () {
+      window.addEventListener('online', function () {
         isOnline = true;
         // Re-check cache status saat kembali online
         initCache();
@@ -757,7 +769,7 @@
         }
 
         if (ac.status === ac.UPDATEREADY) {
-          try { ac.swapCache(); } catch(e) {}
+          try { ac.swapCache(); } catch (e) { }
           setStatus('UPDATE DOWNLOADED — CACHED &#10003;', 'ok');
           setDesc('Update tersimpan, reload untuk terapkan');
           setBar(100);
@@ -820,7 +832,7 @@
         }, false);
 
         ac.addEventListener('updateready', function () {
-          try { ac.swapCache(); } catch(e) {}
+          try { ac.swapCache(); } catch (e) { }
           setStatus('UPDATE CACHED &#10003;', 'ok');
           setDesc('Update tersimpan, reload untuk terapkan');
           setBar(100);
@@ -828,10 +840,36 @@
         }, false);
 
         ac.addEventListener('error', function () {
-          setStatus('CACHE ERROR', 'err');
-          setDesc('Gagal menyimpan — coba lagi');
-          setBtnState('err');
+          // Jangan langsung tampilkan error — cek dulu apakah status OK setelah beberapa detik
+          // PS4 WebKit kadang fire error event tapi cache tetap berhasil
+          var retryCount = 0;
+          function checkAfterError() {
+            retryCount++;
+            var s = ac.status;
+            if (s === 1 /* IDLE */) {
+              // Ternyata sudah OK
+              setStatus('CACHED \u2014 OFFLINE READY &#10003;', 'ok');
+              setDesc('Cache berhasil disimpan');
+              setBar(100);
+              setBtnState('done');
+            } else if (s === 0 /* UNCACHED */ && retryCount < 2) {
+              // Masih belum cached, coba retry
+              setStatus('RETRYING CACHE...', 'warn');
+              setDesc('Mencoba ulang... (' + retryCount + '/2)');
+              setTimeout(checkAfterError, 3000);
+              try { ac.update(); } catch(e) {}
+            } else {
+              // Benar-benar gagal
+              setStatus('CACHE ERROR \u2014 STATUS: ' + s, 'err');
+              setDesc('Gagal menyimpan — coba tekan tombol atau reload');
+              setBtnState('err');
+            }
+          }
+          setStatus('CACHE ERROR — MENUNGGU...', 'err');
+          setDesc('Memeriksa ulang dalam 3 detik...');
+          setTimeout(checkAfterError, 3000);
         }, false);
+
 
         ac.addEventListener('obsolete', function () {
           setStatus('CACHE OBSOLETE', 'err');
@@ -876,7 +914,7 @@
           ac.update();
         } catch (e) {
           // Kalau masih error (race condition), coba swapCache dulu lalu reload
-          try { ac.swapCache(); } catch (e2) {}
+          try { ac.swapCache(); } catch (e2) { }
           setStatus('CACHE ERROR', 'err');
           setDesc('Error: ' + (e.message || 'coba reload halaman'));
           setBtnState('err');
