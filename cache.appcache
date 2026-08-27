@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# build NEXPHYRIX-ROOT-20260827-10
+# build NEXPHYRIX-ROOT-20260827-11
 
 index.html
 v1/index.html
@@ -9,12 +9,8 @@ v1/src/main.js
 v2/index.html
 v2/run_lapse.html
 v2/run_poops.html
-v2/chain_lapse.js
-v2/chain_poops_2.js
-v2/core.js
-v2/mem.js
-v2/int64.js
-v2/ps4_offsets.js
+v2/bundle_lapse.js
+v2/bundle_poops.js
 v2/rpc_worker.js
 v2/logo.png
 v2/payload.bin
