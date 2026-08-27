@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="id" manifest="cache.manifest">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXPHYRIX :: TERMINAL v4.0.1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="includes/style.css">
+</head>
+
+<body>
+
+  <div class="hud-frame"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">NX</span>
+      <h1 class="hologram-wordmark">
+        <span class="scan-line"></span>
+        <span data-text="NEXPHYRIX">NEXPHYRIX</span>
+      </h1>
+    </div>
+
+    <div class="topbar-meta">
+      <div class="meta-item">
+        <span class="meta-label">Uptime</span>
+        <span class="meta-value" id="uptime-display">00:00:00</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Conn</span>
+        <span class="meta-value" id="conn-status">SECURE</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>SECURE UPLINK ESTABLISHED&nbsp;&nbsp;//&nbsp;&nbsp;TARGET FIRMWARE: PS4&nbsp;&nbsp;//&nbsp;&nbsp;PAYLOAD
+        STAGING READY&nbsp;&nbsp;//&nbsp;&nbsp;NEXPHYRIX ASTROBOT LINK ACTIVE&nbsp;&nbsp;//&nbsp;&nbsp;SECURE UPLINK
+        ESTABLISHED&nbsp;&nbsp;//&nbsp;&nbsp;TARGET FIRMWARE: PS4&nbsp;&nbsp;//&nbsp;&nbsp;PAYLOAD STAGING
+        READY&nbsp;&nbsp;//</span>
+    </div>
+  </div>
+
+  <main>
+    <section class="control-deck">
+      <div class="deck-group kernel-select">
+        <span class="deck-title">Kernel</span>
+        <form id="kernel-options">
+          <input type="radio" name="kernel" id="netctrl-exploit" value="netctrl">
+          <label for="netctrl-exploit">NetCtrl</label>
+          <input type="radio" name="kernel" id="lapse-exploit" value="lapse">
+          <label for="lapse-exploit">Lapse</label>
+        </form>
+      </div>
+
+      <button id="jeilbrek" class="btn-primary"><span>&gt; Jeilbrek</span></button>
+
+      <div class="deck-group toggle-group">
+        <div class="autoJb">
+          <label for="autoJbInput" id="autoJbLabel">Auto Jailbreak</label>
+          <input id="autoJbInput" type="checkbox">
+        </div>
+      </div>
+
+      <div class="deck-group status-pills">
+        <div class="status-item">
+          <span class="label">Sys</span>
+          <span class="value" id="sys-status">INITIALIZING</span>
+        </div>
+        <div class="status-item">
+          <span class="label">Exploit</span>
+          <span class="value" id="exploit-status">STANDBY</span>
+        </div>
+      </div>
+    </section>
+
+    <h3 id="UA">&gt; Running on: <span id="ua-value">detecting device...</span></h3>
+
+    <section class="terminal-panel">
+      <pre id="console"><div id="console-content"><span class="log-system">[SYSTEM] Terminal initialized. Waiting for execution...</span><span class="cursor"></span></div>
+    </pre>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span class="footer-info"><span class="footer-label">Kontak</span><span
+        class="footer-value">087-777-747-477</span></span>
+    <span class="footer-divider">•</span>
+    <span class="footer-info"><span class="footer-label">Copyright</span><span class="footer-value">© <span
+          id="footer-year"></span> NEXPHYRIX</span></span>
+  </footer>
+
+  <script src="src/main.js"></script>
+  <script src="includes/script.js"></script>
+</body>
+
+
+</html>
