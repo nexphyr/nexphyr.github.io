@@ -34,7 +34,7 @@ Lakukan langkah ini hanya **Satu Kali Saja**. Setelah berhasil, Anda tidak perlu
 1. **Hubungkan PS4 ke Internet**  
    Buka menu `Settings` > `Network` dan pastikan PS4 Anda terhubung ke koneksi internet normal.
 2. **Buka Browser PS4**  
-   Akses URL Host NEXPHYRIX Anda (contoh: `https://username.github.io/nexphyrix/`).
+   Akses URL Host NEXPHYRIX resmi: `https://nexphyr.github.io/`
 3. **Mulai Proses Caching**  
    Di halaman utama, biarkan sistem memproses secara otomatis atau tekan tombol **CACHE WEBSITE**.
    - Sistem akan mengunduh payload (sekitar 20MB - 30MB).
