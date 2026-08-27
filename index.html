@@ -703,24 +703,35 @@
         // state: 'idle' | 'caching' | 'done' | 'err' | 'offline'
         iconWrap.className = 'btn-cache';
         btnCache.disabled = false;
+        
+        var labelEl = btnCache.querySelector('.label');
 
         if (state === 'caching') {
           iconWrap.classList.add('caching');
           btnCache.disabled = true;
+          labelEl.textContent = 'CACHING...';
+          document.getElementById('cache-icon').innerHTML = '&#8635;';
         } else if (state === 'done') {
           iconWrap.classList.add('done');
-          document.getElementById('cache-icon').innerHTML = '&#10003;';
-          btnCache.disabled = true;  // tidak perlu klik lagi, tapi tetap visible
+          // Jangan di-disable agar bisa di-klik lagi untuk restart/update cache
+          btnCache.disabled = false;
+          labelEl.textContent = 'RESTART CACHE';
+          document.getElementById('cache-icon').innerHTML = '&#8635;'; // Icon panah melingkar (refresh)
         } else if (state === 'err') {
           iconWrap.classList.add('err');
           document.getElementById('cache-icon').innerHTML = '&#33;';
           btnCache.disabled = !isOnline;
+          labelEl.textContent = 'CACHE ERROR';
           if (!isOnline) iconWrap.classList.add('offline');
         } else if (state === 'offline') {
           iconWrap.classList.add('offline');
           btnCache.disabled = true;
+          labelEl.textContent = 'OFFLINE MODE';
+        } else {
+          // idle
+          labelEl.textContent = 'CACHE WEBSITE';
+          document.getElementById('cache-icon').innerHTML = '&#8635;';
         }
-        // idle: enabled, no extra class
       }
 
 
