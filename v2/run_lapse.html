@@ -561,7 +561,6 @@
     </div>
 
     <footer id="footer">
-      <span><b>[KONTAK]</b> 087-777-747-477</span>
       <span><b>[COPYRIGHT]</b> © 2026 NEXPHYRIX</span>
     </footer>
   </main>
@@ -592,7 +591,7 @@
       }
 
       if (ac.status === ac.IDLE || ac.status === ac.UPDATEREADY) {
-        if (ac.status === ac.UPDATEREADY) { try { ac.swapCache(); } catch(e) {} }
+        if (ac.status === ac.UPDATEREADY) { try { ac.swapCache(); } catch (e) { } }
         setCache('cached — offline ready', true);
         loadChain();
         return;
@@ -600,7 +599,7 @@
 
       // Masih dalam proses caching, tunggu dulu
       setCache('checking cache...');
-      ac.addEventListener('checking',    function () { setCache('checking cache...'); }, false);
+      ac.addEventListener('checking', function () { setCache('checking cache...'); }, false);
       ac.addEventListener('downloading', function () { setCache('caching for offline...'); }, false);
       ac.addEventListener('progress', function (e) {
         var pct = (e && e.total > 0) ? ' ' + Math.round((e.loaded / e.total) * 100) + '%' : '';
@@ -613,7 +612,7 @@
         setCache('cached — offline ready', true); loadChain();
       }, false);
       ac.addEventListener('updateready', function () {
-        try { ac.swapCache(); } catch(e) {}
+        try { ac.swapCache(); } catch (e) { }
         setCache('update ready', true); loadChain();
       }, false);
       ac.addEventListener('error', function () {

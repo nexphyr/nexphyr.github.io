@@ -441,12 +441,31 @@
       transform: translateY(-2px);
     }
 
+    /* Hanya state offline yang benar-benar di-dim/disembunyikan */
     .btn-cache:disabled {
-      opacity: 0.38;
       cursor: not-allowed;
       transform: none;
+    }
+
+    /* Offline = dim total, tidak ada internet */
+    .btn-cache.offline {
+      opacity: 0.32;
       box-shadow: none;
       border-color: var(--ink-dim);
+    }
+
+    /* Saat caching — tetap visible tapi tidak bisa diklik */
+    .btn-cache.caching {
+      opacity: 1;
+      border-color: var(--blue);
+      box-shadow: 0 0 18px var(--blue-glow), inset 0 0 10px rgba(0, 180, 255, 0.04);
+    }
+
+    /* Setelah berhasil cache — visible, hijau, tidak perlu diklik lagi */
+    .btn-cache.done {
+      opacity: 1;
+      border-color: #7fd0a0;
+      box-shadow: 0 0 18px rgba(127, 208, 160, 0.3);
     }
 
     .btn-cache .cache-left {
@@ -464,7 +483,12 @@
       margin-bottom: 6px;
     }
 
-    .btn-cache:disabled .tag {
+    .btn-cache.done .tag {
+      color: #7fd0a0;
+      text-shadow: none;
+    }
+
+    .btn-cache.offline .tag {
       color: var(--ink-dim);
       text-shadow: none;
     }
@@ -480,10 +504,16 @@
       margin-bottom: 4px;
     }
 
-    .btn-cache:disabled .label {
+    .btn-cache.done .label {
+      color: #7fd0a0;
+      text-shadow: 0 0 6px rgba(127, 208, 160, 0.5);
+    }
+
+    .btn-cache.offline .label {
       color: var(--ink-dim);
       text-shadow: none;
     }
+
 
     .btn-cache .cache-desc {
       display: block;
@@ -597,6 +627,8 @@
     </h1>
     <p class="subtitle">PS4 Exploit Host — pilih versi firmware</p>
 
+    <div id="cache-status"><span class="dot"></span>&nbsp;CHECKING CACHE...</div>
+
     <div class="choice-grid">
       <a href="v1/index.html" class="btn" id="btn-mode01">
         <span class="tag">Mode 01</span>
@@ -625,8 +657,6 @@
       </div>
     </button>
   </main>
-
-  <div id="cache-status"><span class="dot"></span>&nbsp;CHECKING CACHE...</div>
 
   <footer>© <span id="footer-year"></span> NEXPHYRIX — 087-777-747-477</footer>
 
@@ -660,24 +690,27 @@
       function setBtnState(state) {
         // state: 'idle' | 'caching' | 'done' | 'err' | 'offline'
         iconWrap.className = 'btn-cache';
+        btnCache.disabled = false;
+
         if (state === 'caching') {
           iconWrap.classList.add('caching');
           btnCache.disabled = true;
         } else if (state === 'done') {
           iconWrap.classList.add('done');
           document.getElementById('cache-icon').innerHTML = '&#10003;';
-          btnCache.disabled = true;   // sudah cached, tidak perlu tekan lagi
+          btnCache.disabled = true;  // tidak perlu klik lagi, tapi tetap visible
         } else if (state === 'err') {
           iconWrap.classList.add('err');
           document.getElementById('cache-icon').innerHTML = '&#33;';
           btnCache.disabled = !isOnline;
+          if (!isOnline) iconWrap.classList.add('offline');
         } else if (state === 'offline') {
+          iconWrap.classList.add('offline');
           btnCache.disabled = true;
-        } else {
-          // idle — online, bisa ditekan
-          btnCache.disabled = false;
         }
+        // idle: enabled, no extra class
       }
+
 
       // ─── Online / Offline detection ────────────────────────────────────
       function applyOnlineState() {

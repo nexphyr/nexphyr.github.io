@@ -261,17 +261,41 @@
       gap: 8px;
       transition: color 0.4s, border-color 0.4s;
     }
-    #cache-status.ok  { color: #7fd0a0; border-color: #7fd0a0; text-shadow: 0 0 6px rgba(127,208,160,0.4); }
-    #cache-status.warn{ color: var(--blue); border-color: var(--blue); text-shadow: 0 0 6px var(--blue-glow); }
-    #cache-status.err { color: #d08a7f; border-color: #d08a7f; }
+
+    #cache-status.ok {
+      color: #7fd0a0;
+      border-color: #7fd0a0;
+      text-shadow: 0 0 6px rgba(127, 208, 160, 0.4);
+    }
+
+    #cache-status.warn {
+      color: var(--blue);
+      border-color: var(--blue);
+      text-shadow: 0 0 6px var(--blue-glow);
+    }
+
+    #cache-status.err {
+      color: #d08a7f;
+      border-color: #d08a7f;
+    }
+
     #cache-status .dot {
-      display: inline-block; width: 6px; height: 6px;
-      border-radius: 50%; background: currentColor;
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
       animation: blink 1s step-start infinite;
     }
-    @keyframes blink { 50% { opacity: 0; } }
 
-    .btn-exploit[disabled], .btn-exploit[aria-disabled="true"] {
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .btn-exploit[disabled],
+    .btn-exploit[aria-disabled="true"] {
       opacity: 0.4;
       pointer-events: none;
       cursor: not-allowed;
@@ -409,15 +433,15 @@
 
   <div id="cache-status"><span class="dot"></span>&nbsp;CHECKING CACHE...</div>
 
-  <footer>© <span id="footer-year"></span> NEXPHYRIX — 087-777-747-477</footer>
+  <footer>© <span id="footer-year"></span> NEXPHYRIX</footer>
 
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
     // ─── applicationCache handler ───────────────────────────────────────
     (function () {
-      var el   = document.getElementById('cache-status');
-      var btn  = document.getElementById('btn-lapse');
+      var el = document.getElementById('cache-status');
+      var btn = document.getElementById('btn-lapse');
 
       function setStatus(msg, cls) {
         el.innerHTML = '<span class="dot"></span>&nbsp;' + msg;
@@ -443,7 +467,7 @@
       }
 
       if (ac.status === ac.IDLE || ac.status === ac.UPDATEREADY) {
-        if (ac.status === ac.UPDATEREADY) { try { ac.swapCache(); } catch(e) {} }
+        if (ac.status === ac.UPDATEREADY) { try { ac.swapCache(); } catch (e) { } }
         setStatus('CACHED — OFFLINE READY ✓', 'ok');
         unlock();
         return;
@@ -451,7 +475,7 @@
 
       setStatus('CHECKING CACHE...');
 
-      ac.addEventListener('checking',    function () { setStatus('CHECKING CACHE...'); }, false);
+      ac.addEventListener('checking', function () { setStatus('CHECKING CACHE...'); }, false);
       ac.addEventListener('downloading', function () { setStatus('CACHING FOR OFFLINE (FIRST RUN)...', 'warn'); }, false);
       ac.addEventListener('progress', function (e) {
         var pct = (e && e.total > 0) ? Math.round((e.loaded / e.total) * 100) + '%' : '';
@@ -464,7 +488,7 @@
         setStatus('CACHED — OFFLINE READY ✓', 'ok'); unlock();
       }, false);
       ac.addEventListener('updateready', function () {
-        try { ac.swapCache(); } catch(e) {}
+        try { ac.swapCache(); } catch (e) { }
         setStatus('UPDATE DOWNLOADED – RELOAD TO APPLY', 'ok'); unlock();
       }, false);
       ac.addEventListener('error', function () {
