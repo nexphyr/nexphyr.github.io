@@ -3805,12 +3805,16 @@ function makeRpc(worker) {
                   + "torn down" + (jailbroken ? ", and the process is root"
                     : "") + ". See the stage 8/9/10 marks for what is left.");
             try {
-                stateEl.textContent = payloadRunning
+                const finalMsg = payloadRunning
                     ? "ALL DONE"
                     : kpatched ? "ROOT + KERNEL PATCHED -- NO REBOOT"
                     : jailbroken ? "ROOT -- NO REBOOT NEEDED"
                     : "REPAIRED -- NO REBOOT NEEDED";
+                stateEl.textContent = finalMsg;
                 stateEl.className = "ok";
+                setTimeout(function() {
+                    alert("Jailbreak Berhasil! Tekan OK, lalu segera tekan tombol PS untuk keluar agar terhindar dari error memory.");
+                }, 1000);
             } catch (e) { }
         }
     }

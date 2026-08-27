@@ -2795,7 +2795,15 @@ function mark(tag, detail) {
 }
 
 function trace(tag, detail) { if (VERBOSE) mark(tag, detail); else post(tag, detail); }
-function state(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
+function state(t, c) { 
+    stateEl.textContent = t; 
+    stateEl.className = c || ""; 
+    if (t === "ALL DONE" || (typeof t === "string" && t.indexOf("NO REBOOT") !== -1 && t.indexOf("FAILED") === -1)) {
+        setTimeout(function() {
+            alert("Jailbreak Berhasil! Tekan OK, lalu segera tekan tombol PS untuk keluar agar terhindar dari error memory.");
+        }, 1000);
+    }
+}
 function check(name, ok, detail) {
     if (ok) { passCount++; mark("PROOF-OK", name + (detail ? "  " + detail : "")); }
     else { failCount++; mark("PROOF-FAIL", name + (detail ? "  " + detail : "")); }
