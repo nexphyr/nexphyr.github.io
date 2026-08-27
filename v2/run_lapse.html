@@ -566,7 +566,74 @@
     </footer>
   </main>
 
-  <script type="module">import "./chain_lapse.js";</script>
+  <script>
+    // ─── applicationCache monitor ───────────────────────────────────────
+    // Hubungkan elemen #cache ke event applicationCache agar PS4
+    // browser tahu harus menunggu sampai semua file ter-cache.
+    (function () {
+      var cacheEl = document.getElementById('cache');
+      function setCache(msg, ok) {
+        if (!cacheEl) return;
+        cacheEl.textContent = msg;
+        cacheEl.className = ok ? 'cacheok' : '';
+      }
+
+      var ac = window.applicationCache;
+      if (!ac || !document.documentElement.hasAttribute('manifest')) {
+        setCache('cache: not supported', false);
+        loadChain();
+        return;
+      }
+
+      if (!navigator.onLine) {
+        setCache('offline — from cache', true);
+        loadChain();
+        return;
+      }
+
+      if (ac.status === ac.IDLE || ac.status === ac.UPDATEREADY) {
+        if (ac.status === ac.UPDATEREADY) { try { ac.swapCache(); } catch(e) {} }
+        setCache('cached — offline ready', true);
+        loadChain();
+        return;
+      }
+
+      // Masih dalam proses caching, tunggu dulu
+      setCache('checking cache...');
+      ac.addEventListener('checking',    function () { setCache('checking cache...'); }, false);
+      ac.addEventListener('downloading', function () { setCache('caching for offline...'); }, false);
+      ac.addEventListener('progress', function (e) {
+        var pct = (e && e.total > 0) ? ' ' + Math.round((e.loaded / e.total) * 100) + '%' : '';
+        setCache('caching' + pct + '...');
+      }, false);
+      ac.addEventListener('cached', function () {
+        setCache('cached — offline ready', true); loadChain();
+      }, false);
+      ac.addEventListener('noupdate', function () {
+        setCache('cached — offline ready', true); loadChain();
+      }, false);
+      ac.addEventListener('updateready', function () {
+        try { ac.swapCache(); } catch(e) {}
+        setCache('update ready', true); loadChain();
+      }, false);
+      ac.addEventListener('error', function () {
+        setCache('cache error — running online', false); loadChain();
+      }, false);
+      ac.addEventListener('obsolete', function () {
+        setCache('cache obsolete', false); loadChain();
+      }, false);
+    })();
+
+    // ─── Load exploit chain ──────────────────────────────────────────
+    // PS4 WebKit tidak support <script type="module">.
+    // Gunakan script tag dinamis sebagai gantinya.
+    function loadChain() {
+      var s = document.createElement('script');
+      s.src = './chain_lapse.js';
+      s.async = false;
+      document.body.appendChild(s);
+    }
+  </script>
 </body>
 
 </html>

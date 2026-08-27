@@ -242,7 +242,39 @@
       font-size: 12px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin: 18px 0 32px;
+      margin: 18px 0 16px;
+    }
+
+    #cache-status {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border: 1px solid var(--blue-dim);
+      background: rgba(0, 180, 255, 0.04);
+      color: var(--ink-dim);
+      margin: 0 0 22px;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: color 0.4s, border-color 0.4s;
+    }
+    #cache-status.ok  { color: #7fd0a0; border-color: #7fd0a0; text-shadow: 0 0 6px rgba(127,208,160,0.4); }
+    #cache-status.warn{ color: var(--blue); border-color: var(--blue); text-shadow: 0 0 6px var(--blue-glow); }
+    #cache-status.err { color: #d08a7f; border-color: #d08a7f; }
+    #cache-status .dot {
+      display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: currentColor;
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .btn-exploit[disabled], .btn-exploit[aria-disabled="true"] {
+      opacity: 0.4;
+      pointer-events: none;
+      cursor: not-allowed;
     }
 
     .exploit-card {
@@ -375,10 +407,73 @@
     </div>
   </main>
 
+  <div id="cache-status"><span class="dot"></span>&nbsp;CHECKING CACHE...</div>
+
   <footer>© <span id="footer-year"></span> NEXPHYRIX — 087-777-747-477</footer>
 
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // ─── applicationCache handler ───────────────────────────────────────
+    (function () {
+      var el   = document.getElementById('cache-status');
+      var btn  = document.getElementById('btn-lapse');
+
+      function setStatus(msg, cls) {
+        el.innerHTML = '<span class="dot"></span>&nbsp;' + msg;
+        el.className = cls || '';
+      }
+      function unlock() {
+        if (btn) btn.removeAttribute('aria-disabled');
+      }
+      // Kunci tombol dulu sampai cache siap
+      if (btn) btn.setAttribute('aria-disabled', 'true');
+
+      var ac = window.applicationCache;
+      if (!ac || !document.documentElement.hasAttribute('manifest')) {
+        setStatus('CACHE NOT SUPPORTED — ONLINE ONLY', 'warn');
+        unlock();
+        return;
+      }
+
+      if (!navigator.onLine) {
+        setStatus('OFFLINE — RUNNING FROM CACHE', 'ok');
+        unlock();
+        return;
+      }
+
+      if (ac.status === ac.IDLE || ac.status === ac.UPDATEREADY) {
+        if (ac.status === ac.UPDATEREADY) { try { ac.swapCache(); } catch(e) {} }
+        setStatus('CACHED — OFFLINE READY ✓', 'ok');
+        unlock();
+        return;
+      }
+
+      setStatus('CHECKING CACHE...');
+
+      ac.addEventListener('checking',    function () { setStatus('CHECKING CACHE...'); }, false);
+      ac.addEventListener('downloading', function () { setStatus('CACHING FOR OFFLINE (FIRST RUN)...', 'warn'); }, false);
+      ac.addEventListener('progress', function (e) {
+        var pct = (e && e.total > 0) ? Math.round((e.loaded / e.total) * 100) + '%' : '';
+        setStatus('CACHING... ' + pct, 'warn');
+      }, false);
+      ac.addEventListener('cached', function () {
+        setStatus('CACHED — OFFLINE READY ✓', 'ok'); unlock();
+      }, false);
+      ac.addEventListener('noupdate', function () {
+        setStatus('CACHED — OFFLINE READY ✓', 'ok'); unlock();
+      }, false);
+      ac.addEventListener('updateready', function () {
+        try { ac.swapCache(); } catch(e) {}
+        setStatus('UPDATE DOWNLOADED – RELOAD TO APPLY', 'ok'); unlock();
+      }, false);
+      ac.addEventListener('error', function () {
+        setStatus('CACHE ERROR — ONLINE ONLY', 'err'); unlock();
+      }, false);
+      ac.addEventListener('obsolete', function () {
+        setStatus('CACHE OBSOLETE', 'err'); unlock();
+      }, false);
+    })();
   </script>
 </body>
 
