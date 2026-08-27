@@ -841,21 +841,48 @@
       }
 
       // ─── Tombol Cache diklik ───────────────────────────────────────────
+      // ac.update() hanya boleh dipanggil di state: UNCACHED(0), IDLE(1), OBSOLETE(5)
+      // Jika status CHECKING(2) atau DOWNLOADING(3) → sudah berjalan, jangan panggil lagi
       btnCache.addEventListener('click', function () {
-        if (!navigator.onLine) return;  // double-guard
+        if (!navigator.onLine) return;   // double-guard offline
         if (!ac) return;
+
+        var s = ac.status;
+
+        // Sudah berjalan otomatis oleh browser → cukup pantau, tidak perlu restart
+        if (s === 2 /* CHECKING */ || s === 3 /* DOWNLOADING */) {
+          setStatus('CACHING SUDAH BERJALAN...', 'warn');
+          setDesc('Browser sedang mengunduh file, harap tunggu...');
+          setBtnState('caching');
+          return;
+        }
+
+        // Sudah berhasil di-cache sebelumnya
+        if (s === 1 /* IDLE */ || s === 4 /* UPDATEREADY */) {
+          // Minta browser cek update manifest
+          setStatus('MENGECEK UPDATE CACHE...', 'warn');
+          setDesc('Memeriksa apakah ada file terbaru...');
+          setBtnState('caching');
+          try { ac.update(); } catch (e) { /* safe to ignore */ }
+          return;
+        }
+
+        // UNCACHED(0) atau OBSOLETE(5) → mulai fresh caching
         setStatus('MEMULAI CACHING...', 'warn');
         setDesc('Mengunduh semua HTML & JS ke cache...');
         setBar(0);
         setBtnState('caching');
         try {
-          ac.update();  // paksa browser fetch ulang manifest & semua file
+          ac.update();
         } catch (e) {
+          // Kalau masih error (race condition), coba swapCache dulu lalu reload
+          try { ac.swapCache(); } catch (e2) {}
           setStatus('CACHE ERROR', 'err');
-          setDesc('Gagal memulai caching: ' + e.message);
+          setDesc('Error: ' + (e.message || 'coba reload halaman'));
           setBtnState('err');
         }
       });
+
 
       // ─── Init ──────────────────────────────────────────────────────────
       initCache();
