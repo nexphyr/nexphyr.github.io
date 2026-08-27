@@ -10,8 +10,8 @@ def bundle(files, outfile):
         with open(f, 'r', encoding='utf-8') as fd:
             code = fd.read()
         
-        # Strip import statements
-        code = re.sub(r'import\s+\{(.*?)\}\s+from\s+[\"\'].*?[\"\'];',
+        # Strip import statements with multiline imports: import { \n a, \n b \n } from "..."
+        code = re.sub(r'import\s+\{([\s\S]*?)\}\s+from\s+[\"\'].*?[\"\'];',
             lambda m: f'const {{{m.group(1)}}} = windowNEX;', code)
         
         # Handle bulk exports with potential newlines like: export { \n func1, \n func2 \n };

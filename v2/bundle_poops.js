@@ -1946,10 +1946,10 @@ windowNEX.carrierHomeVector = carrierHomeVector;
 (function() {
 const { int64 } = windowNEX;
 
-import {
+const {
     releaseFakeCell, fakeCellReleased,
     carrierHeaderCopy, carrierHomeVector
-} from "./core.js?v=10";
+} = windowNEX;
 
 let carrier = null;
 
