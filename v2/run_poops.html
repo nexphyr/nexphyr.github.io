@@ -570,7 +570,7 @@
     function loadChain() {
       var s = document.createElement('script');
       s.type = 'module';
-      s.textContent = 'import "./chain_poops_2.js";';
+      s.src = './chain_poops_2.js';
       document.body.appendChild(s);
     }
     // Karena run_poops tidak pakai loader AppCache monitor, langsung load saja

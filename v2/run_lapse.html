@@ -625,11 +625,10 @@
 
     // ─── Load exploit chain ──────────────────────────────────────────
     // Karena chain_lapse.js menggunakan `import`, script HARUS diload sebagai module.
-    // Menggunakan inline import untuk mencegah bug AppCache pada WebKit saat offline.
     function loadChain() {
       var s = document.createElement('script');
       s.type = 'module';
-      s.textContent = 'import "./chain_lapse.js";';
+      s.src = './chain_lapse.js';
       document.body.appendChild(s);
     }
   </script>
