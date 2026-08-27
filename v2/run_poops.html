@@ -567,11 +567,10 @@
   </main>
 
   <script>
-    // Load versi BUNDLE classic script (tanpa import/export) agar aman 
-    // dieksekusi oleh WebKit dalam mode offline cache maupun online.
     function loadChain() {
       var s = document.createElement('script');
-      s.src = './bundle_poops.js';
+      s.type = 'module';
+      s.src = './chain_poops_2.js';
       document.body.appendChild(s);
     }
     // Karena run_poops tidak pakai loader AppCache monitor, langsung load saja
