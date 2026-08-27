@@ -1236,7 +1236,7 @@ function buildCarrier() {
     };
 }
 
-function establishPrimitive(options) {
+export function establishPrimitive(options) {
     const opts = options || {};
 
     if (fakeReleased)
@@ -1271,7 +1271,7 @@ function establishPrimitive(options) {
     });
 }
 
-function currentCarrier() {
+export function currentCarrier() {
     return liveCandidate === null ? null : buildCarrier();
 }
 
@@ -1283,7 +1283,7 @@ const RELEASED_BINDINGS = [
     "keepAlive"
 ];
 
-function releaseFakeCell() {
+export function releaseFakeCell() {
     const report = {
         released: RELEASED_BINDINGS.slice(),
         alreadyReleased: fakeReleased,
@@ -1324,16 +1324,16 @@ function releaseFakeCell() {
     return report;
 }
 
-function fakeCellReleased() {
+export function fakeCellReleased() {
     return fakeReleased;
 }
 
-function carrierHeaderCopy() {
+export function carrierHeaderCopy() {
     return rwHeader.slice(0, CELL_BYTES);
 }
 
-function carrierHomeVector() {
+export function carrierHomeVector() {
     return rwOriginalVector;
 }
 
-
+export { profile, aimCarrier, restoreCarrier, plausibleAddress, plausibleCell };
